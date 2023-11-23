@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+  <title>Crazy Colorful Spiral</title>
+</head>
+<body>
+  <script>
+    let frameCountMultiplier = 0.05;
+    let direction = 1; // 1 for clockwise, -1 for counterclockwise
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+    }
+
+    function draw() {
+      background(0);
+
+      let n = 1500;
+      for (let t = 0; t < n; t++) {
+        // adding width/2 to center the spiral
+        let x =
+          cos((t * frameCountMultiplier) * 0.05) * 300 * map(t, 0, n, 1, 0.1) +
+          width / 2;
+        let y =
+          sin((t * frameCountMultiplier) * 0.05) * 20 +
+          map(t, 0, n, 100, 700);
+
+        // Generate random colors
+        let randomColor = color(random(255), random(255), random(255));
+        fill(randomColor);
+        noStroke();
+        ellipse(x, y, 5, 5);
+      }
+
+      // Change direction when the spiral becomes "too large" or "too small"
+      if (frameCountMultiplier > 1 || frameCountMultiplier < 0.01) {
+        direction *= -1; // Change direction
+      }
+
+      // Adjust the frameCountMultiplier to control the speed of the animation
+      frameCountMultiplier += 0.002 * direction;
+    }
+  </script>
+</body>
+</html>
